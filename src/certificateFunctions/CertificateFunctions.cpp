@@ -1,21 +1,26 @@
 #include "CertificateFunctions.h"
+#include "../helpers/verifyExtension.h"
 
 using namespace std;
 
     // read certificate from disk and return a certificate
     X509* CertificateFunctions::readFromDisk(string pathToCertificate)
     {
-        // std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-verisign.cer";
-        std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-ac-raiz-bry-v3.crt";
+        X509 * certificate;
+        std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-verisign.cer";
+        //std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-ac-raiz-bry-v3.crt";
         FILE *fp = fopen(pathToCert.c_str(), "r");
         if (!fp)
         {
             std::cout << "Could not open certificate";
             return 0;
         }
-        // X509 *certificate = d2i_X509_fp(fp, NULL);
-         X509 * certificate = PEM_read_X509(fp, NULL, NULL, NULL);
 
+        if(verifyExtension(pathToCert) == "crt") {
+            certificate = PEM_read_X509(fp, NULL, NULL, NULL);
+        }else {
+            certificate = d2i_X509_fp(fp, NULL);
+        }
 
         if (!certificate)
         {
