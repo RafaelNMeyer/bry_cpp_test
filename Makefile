@@ -1,11 +1,13 @@
-main: main.o CertificateFunctions.o
-	g++ main.o CertificateFunctions.o -o main
+CC=g++
 
-main.o: ./src/main.cpp
-	g++ -c ./src/main.cpp
+CFLAGS= -Wall
 
-CertificateFunctions.o: ./src/certificateFunctions/CertificateFunctions.cpp
-	g++ -c ./src/certificateFunctions/CertificateFunctions.cpp
+all: 
+	$(CC) $(CFLAGS) -o print src/main.cpp src/certificateFunctions/CertificateFunctions.cpp -lcrypto
+
+
+run:
+	./print
 
 clean:
-	rm *.o main
+	rm -rf *o print

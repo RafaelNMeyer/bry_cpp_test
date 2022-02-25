@@ -5,13 +5,10 @@
 #include <openssl/pem.h>
 #include <openssl/bio.h>
 
-using namespace std;
-
 class CertificateFunctions
 {
 public:
-
-    X509* readFromDisk(string pathToCertificate);
+    X509* readFromDisk(std::string pathToCertificate);
     void printSubjectName(X509* certificate);
     void printSerialNumber(X509* certificate);
     void printNotBefore(X509* certificate);
