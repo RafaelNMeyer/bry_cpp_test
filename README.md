@@ -24,7 +24,7 @@ This software allows you to print the certificate infos.
 
 You have two ways to run the app:
 
-### 1. Read all certificates from folder (best way)
+### 1. Read all certificates from folder (The best option)
 
 In this way, you will pass with pararameter the path of the folder that contains all of your certificates.
 
