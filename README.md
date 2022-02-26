@@ -1,6 +1,6 @@
 # Certificate infos
 
-This software allows you to print the certificate infos.
+This software allows you to print the informations of a certificate.
 
 <br/>
 
