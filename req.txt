@@ -1,7 +1,0 @@
-
-sudo apt-get install libssl-dev
-
-RUN --- gcc foo.c -o foo.exe -L/usr/local/ssl/lib -lssl -lcrypto
-
-g++ main.cpp -o main -lcrypto
-

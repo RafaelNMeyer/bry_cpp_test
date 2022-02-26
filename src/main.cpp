@@ -1,16 +1,22 @@
-#include <string>
+#include <string.h>
 #include <iostream>
+
 #include "certificateFunctions/CertificateFunctions.h"
+#include "helpers/getFileName.h"
 
 using namespace std;
 
+
 int main(int argc, char **argv)
-{   
-    CertificateFunctions certificates;
+{
+    CertificateFunctions certificateFunctions;
+    string path = "./assets/certificates";
 
-    X509* certificate = certificates.readFromDisk("a");
-
-    certificates.printAllInfos(certificate);
+    if(strcmp(argv[1], "default")){
+        certificateFunctions.readAndPrintAllFromPath(path);
+    } else{
+        
+    }
 
     return 0;
 }

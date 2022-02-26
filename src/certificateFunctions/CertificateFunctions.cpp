@@ -1,26 +1,36 @@
+#include <string>
+#include <iostream>
+#include <openssl/err.h>
+#include <openssl/pem.h>
+#include <openssl/bio.h>
+#include <filesystem>
+#include <experimental/filesystem>
+
 #include "CertificateFunctions.h"
-#include "../helpers/verifyExtension.h"
+#include "../helpers/verifyFileExtension.h"
+
 
 using namespace std;
+namespace fs = experimental::filesystem;
 
-    // read certificate from disk and return a certificate
+
     X509* CertificateFunctions::readFromDisk(string pathToCertificate)
     {
         X509 * certificate;
-        std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-verisign.cer";
-        //std::string pathToCert = "/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-ac-raiz-bry-v3.crt";
-        FILE *fp = fopen(pathToCert.c_str(), "r");
+        FILE *fp = fopen(pathToCertificate.c_str(), "r");
         if (!fp)
         {
             std::cout << "Could not open certificate";
             return 0;
         }
 
-        if(verifyExtension(pathToCert) == "crt") {
+        string fileExtension = verifyFileExtension(pathToCertificate);
+
+        if(fileExtension == "crt" || fileExtension == "pem")
             certificate = PEM_read_X509(fp, NULL, NULL, NULL);
-        }else {
-            certificate = d2i_X509_fp(fp, NULL);
-        }
+        else
+            if(fileExtension == "cer" || fileExtension == "der")
+                certificate = d2i_X509_fp(fp, NULL);
 
         if (!certificate)
         {
@@ -33,7 +43,10 @@ using namespace std;
 
     void CertificateFunctions::printSubjectName(X509* certificate){
         X509_NAME *subject = X509_get_subject_name(certificate); 
-        std::cout << "Subject: \n"<< X509_NAME_print_ex_fp(stdout, subject, 0, XN_FLAG_MULTILINE) << "\n\n";
+        if(!subject)
+            std::cout << "Subject: \n"<< "Could not get subject name! :(" << "\n\n";
+        else
+            std::cout << "Subject: \n"<< X509_NAME_print_ex_fp(stdout, subject, 0, XN_FLAG_MULTILINE) << "\n\n";
     }
 
     void CertificateFunctions::printSerialNumber(X509* certificate){
@@ -60,7 +73,10 @@ using namespace std;
     void CertificateFunctions::printPublicKey(X509* certificate){
         EVP_PKEY *pkey = X509_get_pubkey(certificate);
         BIO *bp = BIO_new_fp(stdout, BIO_NOCLOSE);
-        std::cout << "Public Key: \n" << EVP_PKEY_print_private(bp, pkey, 1, NULL) << "\n\n";
+        if(pkey == NULL)
+            std::cout << "Public Key: \n"<< "Could not get the public key! :(" << "\n\n";
+        else
+            std::cout << "Public Key: \n" << EVP_PKEY_print_private(bp, pkey, 1, NULL) << "\n\n";
         free(pkey);
         BIO_free(bp);
     }
@@ -71,4 +87,17 @@ using namespace std;
         printNotBefore(certificate);
         printNotAfter(certificate);
         printPublicKey(certificate);
+    }
+
+    void CertificateFunctions::readAndPrintAllFromPath(string relativePath){
+        string pathToCertificate = "";
+        for (const auto & entry : fs::directory_iterator(relativePath)){
+            pathToCertificate = entry.path();
+            std::string filename = pathToCertificate.substr(pathToCertificate.find_last_of("/\\") + 1);
+
+            std::cout << "\n\n----------" << filename << "----------\n\n";
+            X509 *certificate = readFromDisk(pathToCertificate);
+            printAllInfos(certificate);
+            std::cout << "----------" << filename << "----------\n\n";
+        }
     }

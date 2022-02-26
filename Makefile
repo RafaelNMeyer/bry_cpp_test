@@ -2,14 +2,30 @@ CC=g++
 
 CFLAGS= -Wall
 
-COMPILE=$(CC) $(CFLAGS) -o print src/main.cpp src/helpers/verifyExtension.cpp src/certificateFunctions/CertificateFunctions.cpp -lcrypto
+GCCFLAGS= -lcrypto -lstdc++fs
 
-all: 
+RELATIVEPATH=default
+
+EXE=./bin/print default
+
+COMPILE=$(CC) $(CFLAGS) -o $(EXE) src/main.cpp src/helpers/verifyFileExtension.cpp src/certificateFunctions/CertificateFunctions.cpp $(GCCFLAGS) 
+
+install-dependencies:
+	sudo apt-get install libssl-dev
+
+read-all-files: all clean
+
+read-path $(RELATIVEPATH): read-all-files
+
+all:
+	$(COMPILE)
+	$(EXE)
+
+compile:
 	$(COMPILE)
 
-run:
-	$(COMPILE)
-	./print
+print:
+	$(EXE)
 
 clean:
-	rm -rf *o print
+	rm -rf *o $(EXE)
