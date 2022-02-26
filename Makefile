@@ -17,5 +17,8 @@ all:
 	$(COMPILE)
 	$(EXE) $(read-all) $(path)
 
+compile:
+	$(COMPILE)
+
 clean:
 	rm -rf *o $(EXE)

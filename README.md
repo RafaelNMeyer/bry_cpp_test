@@ -22,22 +22,39 @@ This software allows you to print the informations of a certificate.
 
 # Run the app
 
-You have two ways to run the app:
+You have three ways to run the app:
 
-### 1. Read all certificates from folder (The best option)
+### 1. Run the already compiled version of the software
 
-In this way, you will pass with pararameter the path of the folder that contains all of your certificates.
+The bin folder contains the "print.out" file executable.
 
-example:
+To run it, you have 2 options:
 
-        make all read-all=true path=assets/certificates
+        ./print read-all=true path=./path/to/folder
+
+        ./print read-all=false path=./path/to/certificate.cer
 
 <br>
 
-### 2. Read a specific certificate from folder
+### 2. Compile and read all certificates from folder (The best option)
 
-In this way, you will pass with parameter the path of certificate.
+In this way, you will pass with pararameter the path of the folder that contains all of your certificates.
+
+It will print all infos of all certificates.
 
 example:
 
-        make all read-all=false path=/home/rafael/Documents/bry_cpp_test/assets/certificates/certificado-ac-raiz-bry-v3.crt
+        make all read-all=true path=./path/to/folder
+
+<br>
+
+### 3. Compile and read a specific certificate from folder
+
+In this way, you will pass with parameter the path of certificate.
+
+It will print the infos of the certificate.
+
+example:
+
+        make all read-all=false path=./home/path/to/certificate.cer
+        
