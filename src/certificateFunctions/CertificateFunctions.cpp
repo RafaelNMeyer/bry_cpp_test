@@ -18,6 +18,7 @@ namespace fs = experimental::filesystem;
     {
         X509 * certificate;
         FILE *fp = fopen(pathToCertificate.c_str(), "r");
+        
         if (!fp)
         {
             std::cout << "Could not open certificate";

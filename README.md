@@ -1,6 +1,8 @@
 # Certificate infos
 
-This software allows you to print the informations of a certificate.
+This software allows you to print the informations of a certificate with the following encoding formats and extensions:
+
+.pem, .crt, .der, .cer.
 
 <br/>
 
