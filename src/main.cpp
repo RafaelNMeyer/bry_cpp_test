@@ -13,7 +13,11 @@ int main(int argc, char **argv)
 {
     CertificateFunctions certificateFunctions;
 
-    cout << "\n--------------------\n\n";
+    cout << "\n";
+    if(argc < 2) {
+        cout << "Missing arguments" << "\n\n"; 
+        return 0;
+    }
     if(strcmp(argv[1], "true")){
         X509* certificate = certificateFunctions.readFromDisk(argv[2]);
         certificateFunctions.printAllInfos(certificate);

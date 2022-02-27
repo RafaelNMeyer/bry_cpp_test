@@ -30,9 +30,9 @@ The bin folder contains the "print.out" file executable.
 
 To run it, you have 2 options:
 
-        ./print read-all=true path=./path/to/folder
+        ./bin/print read-all=true path=./path/to/folder
 
-        ./print read-all=false path=./path/to/certificate.cer
+        ./bin/print read-all=false path=./path/to/certificate.cer
 
 <br>
 
