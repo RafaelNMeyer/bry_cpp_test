@@ -26,6 +26,6 @@ public:
     // expiration date and public key of the certificate
     void printAllInfos(X509* certificate);
 
-    // Read all certificates from a folder and print it informations
+    // Read all certificates from a folder and print all informations
     void readAndPrintAllFromPath(std::string relativePath);
 };
